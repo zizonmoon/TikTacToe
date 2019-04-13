@@ -4,10 +4,6 @@ var 바디 = document.body,
     칸들 = [],
     턴 = 'X';
 var 비동기콜백 = function(이벤트) {
-  console.log(이벤트.target);
-  console.log(이벤트.target.parentNode);
-  console.log(이벤트.target.parentNode.parentNode);
-
   var 몇줄 = 줄들.indexOf(이벤트.target.parentNode);
   console.log('몇줄',몇줄);
   var 몇칸 = 칸들[몇줄].indexOf(이벤트.target);
@@ -19,9 +15,42 @@ var 비동기콜백 = function(이벤트) {
   } else {
     console.log('빈칸입니다.');
     칸들[몇줄][몇칸].textContent = 턴;
+
+    var 다참 = false;
+  }
+  //3칸이 다 채워졌나?
+  var 다참 = false;
+  //가로줄 검사
+  if(칸들[몇줄][0].textContent == 턴 &&
+     칸들[몇줄][1].textContent == 턴 &&
+     칸들[몇줄][2].textContent == 턴
+     ) {
+      다참 = true;
+  }
+  //세로줄 검사
+  if(칸들[몇칸][0].textContent == 턴 &&
+    칸들[몇칸][1].textContent == 턴 &&
+    칸들[몇칸][2].textContent == 턴
+    ) {
+     다참 = true;
+  }
+  //대각선 검사
+  if(몇줄 - 몇칸 == 0 || Math.abs(몇줄 - 몇칸) == 2) { 
+    if(
+      칸들[0][0].textContent == 턴 &&
+      칸들[1][1].textContent == 턴 &&
+      칸들[2][2].textContent == 턴 
+    ) {
+      다참 = true;
+    }
+  }
+
+  if(다참) {
+    console.log(턴 +"님이 승리!");
+  } else {
     if(턴 == 'X') {
       턴 = '0';
-    } else {
+    }else {
       턴 = 'X';
     }
   }
